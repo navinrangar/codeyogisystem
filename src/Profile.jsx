@@ -95,31 +95,31 @@ function Profile(props) {
 
    <div className="flex space-x-56 text-xl m-6 font-semibold">
      <p className=""> Mobile Number* </p>
-        <input type="year" className="rounded-md w-96 h-9 mr-13"/>
+        <input type="text" className="rounded-md w-96 h-9 mr-13"/>
         </div>
 
 
    <div className="flex space-x-60 text-xl m-6 font-semibold">
      <p className=""> Date Of Birth* </p>
-        <input type="year" className="rounded-md w-96 h-9 mr-13"/>
+        <input type="text" className="rounded-md w-96 h-9 mr-13"/>
         </div>
 
 
    <div className="flex space-x-56 text-xl m-6 font-semibold">
      <p className=""> Device you have </p>
-        <input type="year" className="rounded-md w-96 h-9 mr-13"/>
+        <input type="text" className="rounded-md w-96 h-9 mr-13"/>
         </div>
 
 
    <div className="flex space-x-56 text-xl m-6 font-semibold">
      <p className=""> Institute roll no. </p>
-        <input type="year" className="rounded-md w-96 h-9 mr-13"/>
+        <input type="text" className="rounded-md w-96 h-9 mr-13"/>
         </div>
 
 
    <div className="flex space-x-56 text-xl m-6 font-semibold">
      <p className=""> Branch (College) </p>
-        <input type="year" className="rounded-md w-96 h-9 mr-13"/>
+        <input type="text" className="rounded-md w-96 h-9 mr-13"/>
         </div>
 </div>
 
