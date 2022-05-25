@@ -1,5 +1,6 @@
 import React from 'react';
 import {DateTime} from 'luxon';
+import MDEditor from '@uiw/react-md-editor';
 
 
 
@@ -16,8 +17,9 @@ function Lectures({lecture}) {
  <p className="text-gray-500 ml-4 "> Duration: {lecture.end_time - lecture.start_time}  </p>
 <span className="mb-2"> </span> 
 
-
- 
+<div>
+   <MDEditor.Markdown className="markdown !text-black font-bold !bg-white" source={lecture.topic}/>
+   </div>
 
  <a className="font-bold ml-64 mb-4" href={lecture.recording_url} target="_blank"> Watch/Download Recording </a>
 

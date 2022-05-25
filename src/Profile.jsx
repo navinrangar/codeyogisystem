@@ -1,9 +1,11 @@
 import {React, useState} from 'react';
 import Button from './Button';
-import {string} from 'yup';
+import {string, number} from 'yup';
 
 
 function Profile(props) {
+
+  // useState Declaration Field
 
   const [email, setEmail]= useState('');
   let [emailError, setEmailError]= useState(false)
@@ -11,28 +13,41 @@ function Profile(props) {
   const [passoutYear, setPassoutYear]= useState('');
   let [passoutYearError, setpassoutYearError]= useState(false)
 
+  
+    //Handle Input Change Field
 
   const handleEmailChange = (event)=>{
     setEmail(event.target.value);
   }
 
 
+  const handlePassoutYearChange = (event)=>{
+    setPassoutYear(event.target.value);
+  }
+
   const submitForm =()=>{
+   
+
+    //Input Validation field
+   
     const emailValidator= string().email().required(); 
     const emailValid = emailValidator.isValidSync(email);
 
-    const passoutYearValidator= string().year(); 
-    const passoutYearValid = passoutYearValidator.isValidSync(passoutYear);
+   const passoutYearValidator= number().test(val => val !== '' && val.toString().length === 4 ).max(new Date().getFullYear()).required();
+    
+   const passoutYearValid = passoutYearValidator.isValidSync(passoutYear);
 
-    //tertiary operations
+    
+   //tertiary operations field
 
-    emailError = emailValid ? "" : "email is not valid";
+    emailError = emailValid ? "email submitted" : "email is not valid";
     console.log(emailError);
     setEmailError(emailError);
 
-    passoutYearError = passoutYearValid ? "" : "Pass out year is not valid";
+   passoutYearError = passoutYearValid ? " Passout year submitted" : "Pass out year is not valid";
     console.log(passoutYearError);
-    setEmailError(passoutYearError);
+    setpassoutYearError(passoutYearError); 
+
   }
 
 
@@ -72,9 +87,10 @@ function Profile(props) {
 
 
 
-     <div className="flex space-x-56 text-xl m-6 font-semibold">
+     <div className="flex flex-col space-x-56 text-xl m-6 font-semibold">
      <p className=""> Year of PassOut* </p>
-        <input type="year" className="rounded-md w-96 h-9 mr-13"/>
+        <input type="text" onChange={handlePassoutYearChange} className="rounded-md w-96 h-9 mr-13"/>
+        <span className="text-red-400 text-sm font-normal"> {passoutYearError}</span>
         </div>
 
    <div className="flex space-x-56 text-xl m-6 font-semibold">

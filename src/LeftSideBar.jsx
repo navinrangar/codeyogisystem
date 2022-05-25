@@ -1,4 +1,4 @@
-import React from 'react';
+import {React, useState, memo} from 'react';
 import Branding from "./Branding";
 import NavLink from "./NavLink";
 
@@ -57,4 +57,4 @@ function LeftSideBar(props){
   );
 }
 
-export default LeftSideBar;
+export default memo(LeftSideBar);
