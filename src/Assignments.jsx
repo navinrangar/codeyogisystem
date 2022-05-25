@@ -1,33 +1,17 @@
 import axios from 'axios';
-import React from 'react';
-import {useState} from 'react';
+import {React, useState} from 'react';
 import Button from "./Button";
-import {useNavigate} from 'react-router-dom';
 import {DateTime} from 'luxon';
+import AssignmentSubmit from './AssignmentSubmit';
+import {useNavigate} from 'react-router-dom';
 
 
 
 
 function Assignments({assignment}) {
 
-  const [PopUp, showPopUp]= useState(false);
-  const [submissionLink, setSubmissionLink]= useState('');
-
-
-  const submitAssignment = ()=>{
-    axios.put(`https://api.codeyogi.io/assignment/${assignment.id}/submit`,
-     {submissionLink: submissionLink}, {withCredentials: true});
-     
-  }
-  
-  
-
-  const onInputChange =(event)=>{
-    setSubmissionLink(event.target.value)
-  }
 
   const navigate = useNavigate();
-
 
 
   return (
@@ -44,14 +28,9 @@ function Assignments({assignment}) {
 
       <div className="m-6">
 
-    <Button onClick={()=> showPopUp(true)} > Submit </Button>
+    <AssignmentSubmit/>
 
-    {PopUp && <div className="fixed p-10 bg-indigo-500 rounded-md top-30 left-30"> 
-    <button className="inset-x-8 inset-y-8" onClick={()=> showPopUp(false)}> HideButton </button>
- 
-    <input type="text" value={submissionLink} onChange={onInputChange} />
-    <Button theme="submit"  onClick={()=> {showPopUp(false); submitAssignment()}}> Save!</Button>
-    </div>}
+
     
     </div>
            </div>

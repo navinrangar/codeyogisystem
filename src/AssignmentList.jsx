@@ -3,12 +3,13 @@ import Assignments from './Assignments';
 import LeftSideBar from "./LeftSideBar";
 import GoBack from "./GoBack";
 import axios from 'axios';
+import AssignmentSubmit from './AssignmentSubmit';
 
 
 
 
 
-function AssignmentList(props) {
+function AssignmentList() {
 
   const [assignments, setAssignments]= useState([]);
 
@@ -19,9 +20,8 @@ function AssignmentList(props) {
 
 
     token.then((response)=>{
-      console.log('response aa gya')
+      console.log('assignmentlist', response.data)
       setAssignments(response.data)
-      console.log(response.data);
     });
   
 
@@ -55,6 +55,7 @@ function AssignmentList(props) {
  
  
  {assignments.map(a=> <Assignments key={a.id} assignment={a} />)}
+ {assignments.map(a=> <AssignmentSubmit key={a.id} assignment={a} />)}
  
 
 

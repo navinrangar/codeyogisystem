@@ -2,31 +2,16 @@ import React, {useState, useEffect} from 'react';
 import {useParams} from 'react-router-dom';
 import axios from 'axios';
 import LeftSideBar from './LeftSideBar'
-import Button from './Button';
 import {Link} from 'react-router-dom';
 import {DateTime} from 'luxon';
+import AssignmentSubmit from './AssignmentSubmit';
 
 
-function AssignmentDetails({assignment}) {
+function AssignmentDetails() {
 
-const [PopUp, showPopUp]= useState(false);
 const [assignmentDetails, setAssignmentDetails]= useState([]);
-const [submissionLink, setSubmissionLink]= useState('');
 
-
-  const submitAssignment = ()=>{
-    axios.put(`https://api.codeyogi.io/assignment/${assignment.id}/submit`,
-     {submissionLink: submissionLink}, {withCredentials: true});
-     
-  }
-
-  const onInputChange =(event)=>{
-    setSubmissionLink(event.target.value)
-  }
-
-
-
-const data= useParams();
+    const data= useParams();
 
    useEffect(()=>{ 
     const token= axios.get(`https://api.codeyogi.io/assignments/${data.assignmentNumber}`, {
@@ -69,23 +54,11 @@ const data= useParams();
           </div>
 
           <div className="flex ml-7 pt-9 ">
-          <Button onClick={()=> showPopUp(true)} > Re-submit </Button>
+          <AssignmentSubmit/>
             <span className="mx-3"> </span>
-            <Link to= {submissionLink} target="_blank" className="text-md mt-1" >See Your Submission- </Link>
+            <Link to= "heythere.com" className="text-md mt-6" >See Your Submission- </Link>
           </div>
 
-          <div className="m-6">
-
-
-
-{PopUp && <div className="fixed p-10 bg-indigo-500 rounded-md top-40 left-30"> 
-<button className="inset-x-8 inset-y-8" onClick={()=> showPopUp(false)}> HideButton </button>
-
-<input type="text" value={submissionLink} onChange={onInputChange} />
-<Button theme="submit"  onClick={()=> {showPopUp(false); submitAssignment()}}> Save!</Button>
-</div>}
-
-</div>
 
           </div>
         </div>

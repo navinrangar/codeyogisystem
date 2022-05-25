@@ -8,6 +8,7 @@ import Logout from "./Logout";
 import Home from "./Home";
 import StudentList from "./StudentList";
 import AssignmentDetails from './AssignmentDetails';
+import AssignmentSubmit from './AssignmentSubmit';
 
 
 
@@ -23,6 +24,7 @@ function App() {
         <Route path="lectures" element={<LectureList/>}/>
         <Route path="assignments" element={<AssignmentList/>}/>
         <Route path="assignments/:assignmentNumber/details" element={<AssignmentDetails/>}/>
+        <Route path="assignment/:assignmentNumber/submit" element={<AssignmentSubmit/>}/>
         <Route path="quiz" element={<Quiz/>}/>
         <Route path="profile" element={<ProfileList/>}/>
         <Route path="logout" element={<Logout/>}/>

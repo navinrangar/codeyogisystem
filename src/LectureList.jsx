@@ -17,7 +17,6 @@ const [lectures, setLectures] = useState([]);
 
     token.then((response)=>{
       setLectures(response.data);
-      console.log(response.data);
     })
   },[])
   
