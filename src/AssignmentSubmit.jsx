@@ -4,9 +4,8 @@ import Button from './Button';
 import {string} from 'yup'
 import {useParams} from 'react-router-dom';
 
-function AssignmentSubmit() { 
 
-  //console.log('assignment id', assignment.id);
+function AssignmentSubmit() { 
   
 
 const [PopUp, showPopUp]= useState(false);

@@ -2,8 +2,8 @@ import React, {useState, useEffect} from 'react';
 import Assignments from './Assignments';
 import LeftSideBar from "./LeftSideBar";
 import GoBack from "./GoBack";
-import axios from 'axios';
 import AssignmentSubmit from './AssignmentSubmit';
+import {getAssignmentList} from './Api';
 
 
 
@@ -11,17 +11,15 @@ import AssignmentSubmit from './AssignmentSubmit';
 
 function AssignmentList() {
 
-  const [assignments, setAssignments]= useState([]);
+  const cachedAssignments= JSON.parse(localStorage.getItem('assignments')) || [];
+
+  const [assignments, setAssignments]= useState(cachedAssignments);
 
   useEffect(()=>{
-    const token= axios.get(`https://api.codeyogi.io/batches/1/assignments`, {
-      withCredentials: true,
-    });
-
-
-    token.then((response)=>{
-      console.log('assignmentlist', response.data)
-      setAssignments(response.data)
+    
+    const token= getAssignmentList();
+    token.then((assignmentData)=>{
+      setAssignments(assignmentData)
     });
   
 

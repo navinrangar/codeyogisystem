@@ -2,22 +2,26 @@ import React, {useState, useEffect} from 'react';
 import LeftSideBar from "./LeftSideBar";
 import Lectures from "./Lectures";
 import GoBack from "./GoBack";
-import axios from 'axios';
+import { getLectureList } from './Api';
+
 
 
 export function LectureList(props) {
 
-const [lectures, setLectures] = useState([]);
+  const token = getLectureList();
+
+ const cachedLectures= JSON.parse(localStorage.getItem('lectures')) || [];
+
+const [lectures, setLectures] = useState(cachedLectures);
+let [error, setError]= useState('');
 
   useEffect(()=>{
 
-    const token= axios.get('https://api.codeyogi.io/batches/1/sessions', {
-      withCredentials: true,
-    });
-
-    token.then((response)=>{
-      setLectures(response.data);
+    token.then((lectureData)=>{
+      setLectures(lectureData);
     })
+    .catch((e)=> {console.error('lecture list couldn\'t be fetched'); setError("data could not be fetched", e)})
+
   },[])
   
 
@@ -41,6 +45,8 @@ const [lectures, setLectures] = useState([]);
           </div>
 
         <div className="w-screen h-full shadow-lg m-8 mt-3"> 
+
+         {error}
         
   
 
@@ -53,5 +59,6 @@ const [lectures, setLectures] = useState([]);
 </div>
   )
   }
+
 
 export default LectureList;  
