@@ -2,23 +2,23 @@
 import React, {useState, useEffect} from 'react';
 import LeftSideBar from "./LeftSideBar";
 import GoBack from "./GoBack";
-import axios from 'axios';
 import Students from './Students';
+import { getStudentList } from './Api';
 
 
 
-function StudentList(props) {
+function StudentList() {
 
-  const [users, setUsers] = useState([]);
+  const cachedUsers= JSON.parse(localStorage.getItem('users'));
+
+  const [users, setUsers] = useState(cachedUsers);
 
   useEffect(() => {
-    const token= axios.get("https://randomuser.me/api/?results=5");
-    token.then((response) => {
-      console.log("data aa gyaa data aa gya");
-      setUsers(response.data.results);
-      console.log(response.data.results);
+    const token= getStudentList();
+    token.then((studentData)=>{
+      setUsers(studentData);
     });
-  }, [])
+  }, []);
 
 
   return (
