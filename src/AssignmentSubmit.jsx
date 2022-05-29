@@ -3,6 +3,7 @@ import axios from 'axios';
 import Button from './Button';
 import {string} from 'yup'
 import {useParams} from 'react-router-dom';
+import {putAssignmentSubmissionLink} from './Api';
 
 
 function AssignmentSubmit() { 
@@ -17,13 +18,20 @@ const data= useParams();
 
 const submitAssignment = ()=>{
 
-    const submissionLinkValid= string().url().isValidSync(submissionLink);
 
-    submissionLinkError= submissionLinkValid ? axios.put(`https://api.codeyogi.io/assignment/${data.assignmentNumber}/submit`,
-    {submissionLink: submissionLink}, {withCredentials: true}) : "enter a url with https://";
+    const submissionLinkValidator = string().url().required();
     
-    setsubmissionLinkError(submissionLinkError);
-    console.log(setsubmissionLinkError);
+    try{ 
+      submissionLinkValidator.validateSync(submissionLink);
+      const message = ("assignment " + data.assignmentNumber + " has been submitted.")
+      setsubmissionLinkError(message );
+      } catch (e){
+        setsubmissionLinkError(e.message);
+        return [];
+      }
+
+      putAssignmentSubmissionLink(data.assignmentNumber, submissionLink);
+  
      
   }
 

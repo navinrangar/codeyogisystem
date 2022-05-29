@@ -3,7 +3,7 @@ import Assignments from './Assignments';
 import LeftSideBar from "./LeftSideBar";
 import GoBack from "./GoBack";
 import AssignmentSubmit from './AssignmentSubmit';
-import {getAssignmentList} from './Api';
+import {getAssignmentList, getCachedData} from './Api';
 
 
 
@@ -11,7 +11,13 @@ import {getAssignmentList} from './Api';
 
 function AssignmentList() {
 
-  const cachedAssignments= JSON.parse(localStorage.getItem('assignments')) || [];
+  const cachedAssignments= [];
+  
+  try{
+    cachedAssignments= getCachedData('assignments') || [];
+  } catch(e){
+    console.log('error aya re baba', e);
+  }
 
   const [assignments, setAssignments]= useState(cachedAssignments);
 

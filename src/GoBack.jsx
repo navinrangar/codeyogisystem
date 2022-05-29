@@ -8,7 +8,7 @@ function GoBack(props) {
   return (
       <div> 
        
-        <Link to ="/"> <Button theme="back"> 🔙 </Button> </Link>
+        <Link to ="/home"> <Button theme="back"> 🔙 </Button> </Link>
         </div>
   
   );

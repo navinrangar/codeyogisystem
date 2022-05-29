@@ -4,7 +4,7 @@ import AssignmentList from "./AssignmentList";
 import LectureList from "./LectureList";
 import Quiz from "./Quiz";
 import ProfileList from "./ProfileList";
-import Logout from "./Logout";
+import Login from "./Login";
 import Home from "./Home";
 import StudentList from "./StudentList";
 import AssignmentDetails from './AssignmentDetails';
@@ -21,14 +21,14 @@ function App() {
     <>
 
       <Routes>
-        <Route index element={<Home />} />
+        <Route index element={<Login />} />
         <Route path="students" element={<StudentList/>} />
         <Route path="lectures" element={<LectureList/>}/>
         <Route path="assignments" element={<AssignmentList/>}/>
-        <Route path="assignments/:assignmentNumber/details" element={<><AssignmentDetails/><AssignmentSubmit/></>}/>
+        <Route path="assignments/:assignmentNumber/details" element={<><AssignmentList/><AssignmentDetails/><AssignmentSubmit/></>}/>
         <Route path="quiz" element={<Quiz/>}/>
         <Route path="profile" element={<ProfileList/>}/>
-        <Route path="logout" element={<Logout/>}/>
+        <Route path="login" element={<Login/>}/>
         <Route path="home" element={<Home/>}/>
       </Routes>
 

@@ -1,28 +1,33 @@
 import React, {useState, useEffect} from 'react';
 import {useParams} from 'react-router-dom';
-import axios from 'axios';
 import LeftSideBar from './LeftSideBar'
 import {Link} from 'react-router-dom';
 import {DateTime} from 'luxon';
 import AssignmentSubmit from './AssignmentSubmit';
+import { getAssignmentDetails } from './Api';
+import MDEditor from '@uiw/react-md-editor';
+import {getCachedData} from './Api';
 
 
 function AssignmentDetails() {
 
-const [assignmentDetails, setAssignmentDetails]= useState([]);
+  const cachedAssignmentDetails ='';
+
+try{
+ cachedAssignmentDetails= getCachedData('assignment_details') || [];
+  } catch (e) {
+    console.log('error is here', e);
+  }
+const [assignmentDetails, setAssignmentDetails]= useState(cachedAssignmentDetails);
 
     const data= useParams();
 
    useEffect(()=>{ 
-    const token= axios.get(`https://api.codeyogi.io/assignments/${data.assignmentNumber}`, {
-        withCredentials: true,
-      });
-
-    
-    token.then((response)=>{
-        setAssignmentDetails(response.data);
-        console.log(response.data);
-    })
+    const token= getAssignmentDetails(data);
+    token.then((AssignmentDetailsData)=>{
+      setAssignmentDetails(AssignmentDetailsData)
+    });
+  
 
   }, [])
 
@@ -50,7 +55,8 @@ const [assignmentDetails, setAssignmentDetails]= useState([]);
 
           <div className="flex p-3">
           <p className="text-xl ml-3 font-semibold" > Description: </p>
-          <p className="text-xl ml-32" > {assignmentDetails.description} </p>
+    
+          <MDEditor.Markdown className="markdown text-xl ml-32 !text-black font-bold !bg-white" source= {assignmentDetails.description}/>
           </div>
 
           <div className="flex ml-7 pt-9 ">

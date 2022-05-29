@@ -3,13 +3,20 @@ import React, {useState, useEffect} from 'react';
 import LeftSideBar from "./LeftSideBar";
 import GoBack from "./GoBack";
 import Students from './Students';
-import { getStudentList } from './Api';
+import { getStudentList, getCachedData } from './Api';
 
 
 
 function StudentList() {
 
-  const cachedUsers= JSON.parse(localStorage.getItem('users'));
+
+  const cachedUsers= [];
+
+    try{
+   cachedUsers= getCachedData('users'); 
+    } catch(e){
+      console.log(e);
+    }
 
   const [users, setUsers] = useState(cachedUsers);
 

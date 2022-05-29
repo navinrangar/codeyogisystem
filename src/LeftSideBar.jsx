@@ -7,9 +7,6 @@ import NavLink from "./NavLink";
 
 function LeftSideBar(props){
 
-  
-
-
   return(
     <>
 
@@ -46,7 +43,7 @@ function LeftSideBar(props){
 
 
         <div className="flex hover:bg-indigo-700">
-   <img className="w-8 h-7 ml-2 mt-4 border border-white bg-white rounded-full"/> <NavLink href="/logout"> LogOut </NavLink>
+   <img className="w-8 h-7 ml-2 mt-4 border border-white bg-white rounded-full"/> <NavLink href="/login"> LogOut </NavLink>
        </div>
 
        

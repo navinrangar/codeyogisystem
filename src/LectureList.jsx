@@ -2,15 +2,23 @@ import React, {useState, useEffect} from 'react';
 import LeftSideBar from "./LeftSideBar";
 import Lectures from "./Lectures";
 import GoBack from "./GoBack";
-import { getLectureList } from './Api';
+import { getLectureList, getCachedData} from './Api';
+
 
 
 
 export function LectureList(props) {
 
   const token = getLectureList();
+  const cachedLectures = [];
 
- const cachedLectures= JSON.parse(localStorage.getItem('lectures')) || [];
+
+  try{
+ cachedLectures= getCachedData('lectures') || [];
+    } catch(e) {
+      console.log(e);
+    }
+
 
 const [lectures, setLectures] = useState(cachedLectures);
 let [error, setError]= useState('');
