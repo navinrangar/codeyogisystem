@@ -4,6 +4,7 @@ import {string, number} from 'yup';
 import {Link} from 'react-router-dom';
 import {useNavigate} from 'react-router-dom';
 import Home, { getLoggedInData } from './Home';
+import {form} from 'react-hook-form';
 
 
 
@@ -33,7 +34,7 @@ function Login() {
 
   let loggedIn = '';
 
-  const submitForm =()=>{
+  const submitForm =(event)=>{
 
       if(email=== 'a@b.com' && password === '12345678') {
       loggedIn = true;
@@ -78,10 +79,12 @@ function Login() {
       return;
     }
 
+    event.preventDefault();
 
   }
 
   return (
+    <form onSubmit={submitForm}>
     <div className="ml-96 mt-48">
     <span className='text-xm text-red-400'> {credentialsError}  </span>
     <h1 className="font-bold text-3xl mb-5"> Log into CodeYogi</h1>
@@ -89,19 +92,21 @@ function Login() {
       <div className="flex space-x-2 mb-3"> 
       <p> Email ID: </p>
       
-    <input type="text" onChange={handleEmailChange} className="border border-strong" placeholder="  your email"/>
+    <input type="text" autoComplete="current-email" onChange={handleEmailChange} className="border border-strong" placeholder="  your email"/>
     <span className='text-xm text-red-400'> {emailError} </span>
       </div>
       
 
       <div className="flex space-x-2  mb-5"> 
       <p> Password: </p>
-      <input type="password" onChange={handlePasswordChange} className="border border-strong" placeholder="  your code"/>
+      <input type="password" autoComplete="current-password" onChange={handlePasswordChange} className="border border-strong" placeholder="  your code"/>
       <span className='text-xm text-red-400'> {passwordError} </span>
       </div>
-      <Button onClick={submitForm}> LogIn </Button>
+      <Button type="submit"> LogIn </Button>
+      <Button type="button"> Register </Button>
     </div>
 </div> 
+</form>
   );
 }
 

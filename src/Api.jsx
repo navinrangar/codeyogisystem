@@ -51,20 +51,20 @@ export const getAssignmentList=()=>{
     }
 
 
-    export const getAssignmentDetails = (data)=>{
-      const token= axios.get(CODEYOGI_BASE_URL + `assignments/${data.assignmentNumber}`, {
+    export const getAssignmentDetails = async (data)=>{
+
+    try{
+      const response= await axios.get(CODEYOGI_BASE_URL + `assignments/${data.assignmentNumber}`, {
         withCredentials: true,
-      });
-  
-      return token 
-      .catch(handleError)
-      .then((response)=>{
+      } );
+
         const AssignmentDetailsData= response.data;
         putCachedData("assignment_details", AssignmentDetailsData);
-        return AssignmentDetailsData;
-      });
+        return AssignmentDetailsData; 
+    } catch (e){
+      handleError(e);
     }
-
+    }
 
    /* export const putAssignmentLink = (data)=>{
       const token= axios.get(`https://api.codeyogi.io/assignment/${data.assignmentNumber}/submit`, {
@@ -102,5 +102,6 @@ export const getAssignmentList=()=>{
 
 
     const handleError = (e)=>{
+      if(e=== 'ERR_TIMED_OUT')
     console.log('error in your program', e);
     };

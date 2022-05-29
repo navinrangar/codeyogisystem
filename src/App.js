@@ -11,8 +11,6 @@ import AssignmentDetails from './AssignmentDetails';
 import AssignmentSubmit from './AssignmentSubmit';
 
 
-//<Route path="assignment/:assignmentNumber/submit" element={<AssignmentSubmit/>}/>
-
 
 function App() {
 
@@ -25,7 +23,7 @@ function App() {
         <Route path="students" element={<StudentList/>} />
         <Route path="lectures" element={<LectureList/>}/>
         <Route path="assignments" element={<AssignmentList/>}/>
-        <Route path="assignments/:assignmentNumber/details" element={<><AssignmentList/><AssignmentDetails/><AssignmentSubmit/></>}/>
+        <Route path="assignments/:assignmentNumber/details" element={<><AssignmentDetails/><AssignmentSubmit/></>}/>
         <Route path="quiz" element={<Quiz/>}/>
         <Route path="profile" element={<ProfileList/>}/>
         <Route path="login" element={<Login/>}/>
