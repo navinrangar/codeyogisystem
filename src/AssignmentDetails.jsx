@@ -4,9 +4,8 @@ import LeftSideBar from './LeftSideBar'
 import {Link} from 'react-router-dom';
 import {DateTime} from 'luxon';
 import AssignmentSubmit from './AssignmentSubmit';
-import { getAssignmentDetails } from './Api';
+import { getAssignmentDetails, getCachedData  } from './Api';
 import MDEditor from '@uiw/react-md-editor';
-import {getCachedData} from './Api';
 
 
 function AssignmentDetails() {

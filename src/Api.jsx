@@ -5,6 +5,21 @@ const CODEYOGI_BASE_URL = "https://api.codeyogi.io/";
 const RANDOMUSER_BASE_URL= "https://randomuser.me/";
 
 
+
+export const getQuizList=()=>{
+  const responsePromise= axios.get(`https://opentdb.com/api.php?amount=10&category=9&difficulty=medium&type=multiple`);
+
+  return responsePromise
+  .catch(handleError)
+  .then((response)=>{
+       const quizData = response.data.results;
+       putCachedData("users", quizData);
+       return quizData;
+   });
+
+}
+
+
 export const getStudentList=()=>{
     const responsePromise= axios.get(RANDOMUSER_BASE_URL + `api/?results=5`);
 
@@ -88,6 +103,23 @@ export const getAssignmentList=()=>{
     };
 
 
+    // just for example purpose how to call more than two apis and execute them simultaneouly.
+
+    export const getData = ()=>{
+      const assignmentsPromise= axios.get(CODEYOGI_BASE_URL + `batches/1/assignments`,{
+        withCredentials: true,})
+      
+
+        const lecturesPromise= axios.get(CODEYOGI_BASE_URL + `batches/1/sessions`,{
+          withCredentials:true,})
+          
+
+         const combinedPromise = Promise.all([assignmentsPromise, lecturesPromise])
+         combinedPromise.then((assignmentsResponse, lecturesResponse) =>{
+           console.log('assignment ka response aya hai', assignmentsResponse);
+           console.log('lectures ka response aya hai', lecturesResponse);
+         });
+        };
 
 
 

@@ -8,7 +8,7 @@ import {Link} from "react-router-dom";
 function QuizHeader(props) {
   return (
     <>
-      <div className="flex bg-gray-800 w-screen justify-between">
+      <div className="flex bg-gray-800 fixed w-screen justify-between">
         <div className="flex pl-3"> 
       <Branding> </Branding>
         <p class="text-white text-lg bg-gray-800 p-4">  |  Welcome, Navin </p>
@@ -21,7 +21,7 @@ function QuizHeader(props) {
           <span className="m-2"> </span>
         <Button theme="timer"> 00:00 </Button>
           <span className="m-2"> </span>
-           <Button theme="logout"> <Link to="/logout"> LogOut</Link></Button>
+           <Button theme="logout"> <Link to="/login"> LogOut</Link></Button>
         </div>
         </div>
     </>

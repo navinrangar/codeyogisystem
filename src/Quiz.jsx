@@ -1,16 +1,35 @@
-import React from 'react';
+import {useState, useEffect} from 'react';
 import QuizHeader from './QuizHeader';
 import GoBack from "./GoBack";
+import { getQuizList } from './Api';
+import QuizQuestion from './QuizQuestion';
+import LeftSideBar from './LeftSideBar';
 
 
-function Quiz(props) {
+function Quiz() {
+
+  const [quiz, setQuiz]= useState([]);
+
+  let apiActivated;
+
+  useEffect(()=>{
+    
+    const token= getQuizList();
+    token.then((quizData)=>{
+      setQuiz(quizData)
+      console.log(quizData)
+      apiActivated= true;
+    });
+  
+
+  },[])
+
   return (
     <>
-      <div className="flex">
-      <QuizHeader> </QuizHeader>
-        </div>
-
-      <p class="text-center my-56"> No Active Questions.</p>
+      <QuizHeader/>
+    
+      {quiz.map(q=> <QuizQuestion quiz={q}/>)}
+      {!(apiActivated= true) && <p class="text-center my-56"> No Active Questions.</p>}
     </>
   );
 }
