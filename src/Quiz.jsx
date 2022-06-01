@@ -29,7 +29,7 @@ function Quiz() {
       <QuizHeader/>
     
       {quiz.map(q=> <QuizQuestion quiz={q}/>)}
-      {!(apiActivated= true) && <p class="text-center my-56"> No Active Questions.</p>}
+      {!apiActivated && <p class="text-center my-56"> No Active Questions.</p>}
     </>
   );
 }

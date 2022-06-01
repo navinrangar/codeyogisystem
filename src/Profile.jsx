@@ -1,11 +1,44 @@
-import {React, useState} from 'react';
+import {useState, createContext} from 'react';
 import Button from './Button';
-import {string, number} from 'yup';
+import {Form, Formik} from 'formik';
+import {object, string, number, toString} from 'yup';
+import Input from './Input'
+import { putProfileData } from './Api';
+import AlertContext from './AlertContext';
+import { useContext } from 'react'
 
 
-function Profile(props) {
 
-  // useState Declaration Field
+function Profile() {
+
+  const validationSchema= object().shape({
+    email: string().email().required(),
+    'passout-year': number().test(val => val.toString().length === 4 ).max(new Date().getFullYear()).required()
+  })
+
+
+
+  //api calling area
+
+  const {setAlertMessage}= useContext(AlertContext)
+
+  const onSubmit=(event)=>{
+     putProfileData();
+    setAlertMessage("Profile Updated")
+     
+  }
+
+
+    const initialValues= {
+      email: '',
+      'passout-year': ''
+    }
+
+
+
+
+
+  /* useState Declaration Field
 
   const [email, setEmail]= useState('');
   let [emailError, setEmailError]= useState(false)
@@ -28,12 +61,12 @@ function Profile(props) {
   const submitForm =()=>{
    
 
-    //Input Validation field
+     Input Validation field
    
     const emailValidator= string().email().required(); 
     const emailValid = emailValidator.isValidSync(email);
 
-   const passoutYearValidator= number().test(val => val !== '' && val.toString().length === 4 ).max(new Date().getFullYear()).required();
+   const passoutYearValidator= number().test(val => val.toString().length === 4 ).max(new Date().getFullYear())
     
    const passoutYearValid = passoutYearValidator.isValidSync(passoutYear);
 
@@ -50,14 +83,19 @@ function Profile(props) {
 
   }
 
+  */
 
   return (
-   <div className="grid grid-row-3 divide-x rounded-lg bg-yellow-400 m-11 h-full w-screen">
+    <>
+
+    <Formik onSubmit={onSubmit} initialValues={initialValues} validationSchema={validationSchema}>
+     <Form>
+     <div className="grid grid-row-3 divide-x rounded-lg bg-yellow-400 m-11 h-full w-full">
    
      <div className="text-xl m-6 font-semibold">
      <h2> Personal Details</h2>
         </div>
-<div className="">
+  <div className="">
       <div className="flex space-x-60 text-xl m-6 font-semibold">
      <p className=""> First Name* </p>
         <input className="rounded-md w-96 h-9 mr-13"/>
@@ -74,8 +112,15 @@ function Profile(props) {
       <div className="flex space-x-56 text-xl m-6 font-semibold">
      <p className=""> Email Address* </p>
      <div className="flex flex-col">
-        <input onChange={handleEmailChange} type="email" className="rounded-md w-96 h-9 mr-13"/>
-        <span className="text-red-400 font-normal text-sm"> {emailError} </span>
+
+        <Input id="email"
+        name="email"
+        type="email"
+        autoComplete="email"
+        required
+        />
+
+        <span className="text-red-400 font-normal text-sm"> </span>
         </div>
         </div>
 
@@ -89,8 +134,15 @@ function Profile(props) {
 
      <div className="flex flex-col space-x-56 text-xl m-6 font-semibold">
      <p className=""> Year of PassOut* </p>
-        <input type="text" onChange={handlePassoutYearChange} className="rounded-md w-96 h-9 mr-13"/>
-        <span className="text-red-400 text-sm font-normal"> {passoutYearError}</span>
+
+       <Input id="passout-year"
+        name="passout-year"
+        type="number"
+        autoComplete="passout-year"
+        
+        />
+
+        <span className="text-red-400 text-sm font-normal"> </span>
         </div>
 
    <div className="flex space-x-56 text-xl m-6 font-semibold">
@@ -124,12 +176,15 @@ function Profile(props) {
 </div>
 
      <div className="m-4"> 
-     <Button onClick={submitForm} theme="submit"> Update Profile </Button>
+     <Button onSubmit= {onSubmit} type= "submit" theme="submit"> Update Profile </Button>
       </div>
 </div>
-     
-  
+</Form>
+</Formik>
+</>
   );
 }
+
+
 
 export default Profile;  

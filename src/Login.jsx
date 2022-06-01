@@ -5,27 +5,29 @@ import {Link} from 'react-router-dom';
 import {useNavigate} from 'react-router-dom';
 import { getLoggedInData } from './Home';
 import {form} from 'react-hook-form';
+import {useLoginForm} from './Hooks';
 
 
 
 function Login() {
 
-  const [formData, setFormData]= useState({
-    email: '',
-    password: ''
-  });
-
-  let [formDataError, setFormDataError]= useState(false);
-
-
-
-  const handleFormChange=(event)=>{
-    setFormData({...formData, [event.target.name]: event.target.value})
-    console.log('this is handledata', formData)
-  }
-
 
   
+
+  const submitFunction=(event)=>{
+     console.log('this is handleChange generated data', values)
+   }
+ 
+
+  const {values, handleInputChange, handleFormSubmit, handleBlur, touched, credentialsError, valuesError} = useLoginForm({
+    email: '',
+    password: ''
+  }, submitFunction ); 
+
+
+ /*  let [valuesError, setvaluesError]= useState(false);
+
+
 
   const navigate = useNavigate();
 
@@ -35,13 +37,13 @@ function Login() {
 
 
 
-  const handleSubmit =(event)=>{
+    const handleSubmit =(event)=>{
     event.preventDefault();
 
-      if(formData.email=== 'a@b.com' && formData.password === 'navin@123') {
+      if(values.email=== 'a@b.com' && values.password === 'navin@123') {
       loggedIn = true;
       getLoggedInData(loggedIn);
-      console.log('data', formData);
+      console.log('data', values);
       navigate(`/home`)
     } else {
         setCredentialsError('Looks like you have entered wrong credentials');
@@ -65,26 +67,26 @@ function Login() {
    setEmailError(emailError); */
 
 
-      try{ 
-     emailValidator.validateSync(formData.email);
+     /* try{ 
+     emailValidator.validateSync(values.email);
      } catch(e){
        console.log(e.message)
-    setFormDataError(e.message);
+    setvaluesError(e.message);
     }
    
     try{
-      passwordValidator.validateSync(formData.password)
+      passwordValidator.validateSync(values.password)
     } catch (e) {
-      setFormDataError(e.message);
+      setvaluesError(e.message);
       console.log(e.message);
       return;
     }
 
 
-  }
+  } */
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleFormSubmit}>
     <div className="ml-96 mt-48">
     <span className='text-xm text-red-400'> {credentialsError}  </span>
     <h1 className="font-bold text-3xl mb-5"> Log into CodeYogi</h1>
@@ -92,16 +94,16 @@ function Login() {
       <div className="flex space-x-2 mb-3"> 
 
     <lable htmlFor="email"> Email </lable>
-    <input type="text" name="email" value={formData.email} autoComplete="email" onChange={handleFormChange} required className="border border-strong" placeholder="  your email"/>
-    <span className='text-xm text-red-400'> {formDataError} </span>
+    <input onBlur={handleBlur} touched={touched} type="text" name="email" value={values.email} autoComplete="email" onChange={handleInputChange} required className="border border-strong" placeholder="  your email"/>
+    {touched.email && valuesError && <span className='text-xm text-red-400'> {valuesError} </span>}
       </div>
       
 
       <div className="flex space-x-2 mb-5"> 
       <span> Password </span>
       <lable htmlFor="password" className="sr-only"> Password </lable>
-      <input id="loginpassword" type="password" name="password" value={formData.password} autoComplete="password" onChange={handleFormChange} required className="border border-strong" placeholder="  your code"/>
-      <span className='text-xm text-red-400'> {formDataError} </span>
+      <input id="loginpassword" type="password" name="password" value={values.password} autoComplete="password" onChange={handleInputChange} required className="border border-strong" placeholder="  your code"/>
+      <span className='text-xm text-red-400'> {valuesError} </span>
       </div>
       <Button type="submit"> LogIn </Button>
       <Button type="button"> Register </Button>

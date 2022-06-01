@@ -2,29 +2,34 @@ import React from 'react';
 import Profile from './Profile';
 import LeftSideBar from './LeftSideBar';
 import GoBack from "./GoBack";
-import axios from 'axios';
+import {Alert} from './Alert';
+import {useState, createContext} from 'react'
+import AlertContext from './AlertContext';
 
 
+function ProfileList() {
 
-function ProfileList(props) {
-
+  const [alertMessage, setAlertMessage]= useState('');
 
 
 
   return (
-   <div className="flex">
+    <> 
+    <AlertContext.Provider value={{alertMessage, setAlertMessage}}>
+      <div className="flex">
       <div> 
         <LeftSideBar> </LeftSideBar>
         </div>
-     
-     <Profile> </Profile>
-     <div className="m-2">
-<GoBack> </GoBack>
+        <div>
+     <Profile/>
      </div>
-      
-      
+     <div className="flex m-2">
+     <Alert> </Alert>
+<GoBack> </GoBack>
+     </div>   
 </div>
- 
+</AlertContext.Provider>
+</>
   );
 }
 

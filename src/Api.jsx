@@ -102,6 +102,16 @@ export const getAssignmentList=()=>{
     {submissionLink: submissionLink}, {withCredentials: true});
     };
 
+      // POST PROFILE DATA..
+
+      export const putProfileData = ()=>{
+    
+        axios.put(`https://api.codeyogi.io/me`,
+       {withCredentials: true});
+      };
+
+
+
 
     // just for example purpose how to call more than two apis and execute them simultaneouly.
 

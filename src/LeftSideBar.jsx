@@ -22,34 +22,34 @@ function LeftSideBar(props){
       <h1 className="w-60 bg-gray-800 text-white text-3xl font-bold pl-3 pt-3 pb-3"> <Link to="/home"> CODEYOGI </Link></h1>
         </div>
 
-   <div className={"fixed w-60 h-screen bg-gray-800 items-center "}>
+   <div className={"fixed w-60 h-screen bg-gray-800 items-center"}>
     
      <div className="flex  hover:bg-indigo-600">
-      <div className="mt-4 ml-4">
-      <MdAssignment width="12" height="6" />
+      <div className="mt-1 ml-4">
+      <MdAssignment className ="w-7 h-11"> </MdAssignment>
       </div>
      <NavLink href="/assignments"> Assignments </NavLink>
        </div>
 
      <div className="flex hover:bg-indigo-700">
-       <div className="mt-4 ml-4">
-       <HiSpeakerphone/>
+       <div className="mt-1 ml-4">
+       <HiSpeakerphone className ="w-7 h-11"></HiSpeakerphone>
        </div>
     <NavLink href="/lectures"> Lectures </NavLink>
        </div>
 
 
       <div className="flex hover:bg-indigo-700">
-      <div className="mt-4 ml-4">
-        <MdQuiz/>
+      <div className="mt-1 ml-4">
+        <MdQuiz className ="w-7 h-11"></MdQuiz>
       </div>
     <NavLink href="/quiz"> Quiz </NavLink>
        </div>
 
 
      <div className="flex hover:bg-indigo-700">
-       <div className="mt-4 ml-4">
-         <GiBowman/>
+       <div className="mt-1 ml-4">
+         <GiBowman className ="w-7 h-11"></GiBowman>
          </div>
     <NavLink href="/students"> Students </NavLink>
        </div>
@@ -60,16 +60,16 @@ function LeftSideBar(props){
      <div className="mt-36">
 
         <div className="flex hover:bg-indigo-700">
-        <div className="mt-4 ml-4">
-        <CgProfile/>
+        <div className="mt-1 ml-4">
+        <CgProfile className ="w-7 h-11"></CgProfile>
         </div>
        <NavLink href="/profile"> Profile </NavLink>
        </div>
 
 
         <div className="flex hover:bg-indigo-700">
-        <div className="mt-4 ml-4">
-        <IoMdLogOut/>
+        <div className="mt-1 ml-4">
+        <IoMdLogOut className ="w-7 h-11"></IoMdLogOut>
         </div>
   <NavLink href="/login"> LogOut </NavLink>
        </div>
