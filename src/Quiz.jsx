@@ -26,8 +26,7 @@ function Quiz() {
 
   return (
     <>
-      <QuizHeader/>
-    
+      <QuizHeader className="mb-6"/>
       {quiz.map(q=> <QuizQuestion quiz={q}/>)}
       {!apiActivated && <p class="text-center my-56"> No Active Questions.</p>}
     </>

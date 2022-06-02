@@ -1,87 +1,70 @@
-import axios from 'axios';
-import {useNavigate} from 'react-router-dom';
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const CODEYOGI_BASE_URL = "https://api.codeyogi.io/";
-const RANDOMUSER_BASE_URL= "https://randomuser.me/";
+const RANDOMUSER_BASE_URL = "https://randomuser.me/";
 
+export const getQuizList = () => {
+  const responsePromise = axios.get(
+    `https://opentdb.com/api.php?amount=10&category=9&difficulty=medium&type=multiple`
+  );
 
-
-export const getQuizList=()=>{
-  const responsePromise= axios.get(`https://opentdb.com/api.php?amount=10&category=9&difficulty=medium&type=multiple`);
-
-  return responsePromise
-  .catch(handleError)
-  .then((response)=>{
-       const quizData = response.data.results;
-       putCachedData("users", quizData);
-       return quizData;
-   });
-
-}
-
-
-export const getStudentList=()=>{
-    const responsePromise= axios.get(RANDOMUSER_BASE_URL + `api/?results=5`);
-
-   return responsePromise
-   .catch(handleError)
-   .then((response)=>{
-        const studentData = response.data.results;
-        putCachedData("users", studentData);
-        return studentData;
-    });
-
+  return responsePromise.catch(handleError).then(response => {
+    const quizData = response.data.results;
+    putCachedData("users", quizData);
+    return quizData;
+  });
 };
 
+export const getStudentList = () => {
+  const responsePromise = axios.get(RANDOMUSER_BASE_URL + `api/?results=5`);
 
+  return responsePromise.catch(handleError).then(response => {
+    const studentData = response.data.results;
+    putCachedData("users", studentData);
+    return studentData;
+  });
+};
 
-export const getAssignmentList=()=>{
-    const token= axios.get(CODEYOGI_BASE_URL + `batches/1/assignments`, {
-      withCredentials: true,
+export const getAssignmentList = () => {
+  const token = axios.get(CODEYOGI_BASE_URL + `batches/1/assignments`, {
+    withCredentials: true
+  });
+
+  return token.catch(handleError).then(response => {
+    const assignmentData = response.data;
+    putCachedData("assignments", assignmentData);
+    return assignmentData;
+  });
+};
+
+export const getLectureList = () => {
+  const token = axios.get(CODEYOGI_BASE_URL + "batches/1/sessions", {
+    withCredentials: true
+  });
+
+  return token.catch(handleError).then(response => {
+    const lectureData = response.data;
+    putCachedData("lectures", lectureData);
+    return lectureData;
+  });
+};
+
+export const getAssignmentDetails = async data => {
+  try {
+    const response = await axios.get(CODEYOGI_BASE_URL + `assignments/${data.assignmentNumber}`, {
+      withCredentials: true
     });
 
-    return token
-    .catch(handleError)
-    .then((response)=>{
-       const assignmentData= response.data;
-       putCachedData("assignments", assignmentData);
-       return assignmentData;
-      });
-    
-    };
+    const AssignmentDetailsData = response.data;
+    putCachedData("assignment_details", AssignmentDetailsData);
+    return AssignmentDetailsData;
+  } catch (e) {
+    handleError(e);
+  }
+};
 
-
-    export const getLectureList=()=>{
-        const token= axios.get(CODEYOGI_BASE_URL + 'batches/1/sessions', {
-            withCredentials: true,
-          });
-      
-          return token
-          .catch(handleError)
-          .then((response)=>{
-            const lectureData= response.data;
-            putCachedData("lectures", lectureData);
-            return lectureData;
-          });
-    }
-
-
-    export const getAssignmentDetails = async (data)=>{
-
-    try{
-      const response= await axios.get(CODEYOGI_BASE_URL + `assignments/${data.assignmentNumber}`, {
-        withCredentials: true,
-      } );
-
-        const AssignmentDetailsData= response.data;
-        putCachedData("assignment_details", AssignmentDetailsData);
-        return AssignmentDetailsData; 
-    } catch (e){
-      handleError(e);
-    }
-    }
-
-   /* export const putAssignmentLink = (data)=>{
+/* export const putAssignmentLink = (data)=>{
       const token= axios.get(`https://api.codeyogi.io/assignment/${data.assignmentNumber}/submit`, {
         withCredentials: true,
       });
@@ -93,57 +76,46 @@ export const getAssignmentList=()=>{
       });
     } */
 
+export const putAssignmentSubmissionLink = (assignmentNumber, submissionLink) => {
+  axios.put(
+    `https://api.codeyogi.io/assignment/${assignmentNumber}/submit`,
+    { submissionLink: submissionLink },
+    { withCredentials: true }
+  );
+};
 
-  
+// POST PROFILE DATA..
 
-    export const putAssignmentSubmissionLink = (assignmentNumber, submissionLink)=>{
-    
-      axios.put(`https://api.codeyogi.io/assignment/${assignmentNumber}/submit`,
-    {submissionLink: submissionLink}, {withCredentials: true});
-    };
+export const putProfileData = () => {
+  axios.put(`https://api.codeyogi.io/me`, { withCredentials: true });
+};
 
-      // POST PROFILE DATA..
+// just for example purpose how to call more than two apis and execute them simultaneouly.
 
-      export const putProfileData = ()=>{
-    
-        axios.put(`https://api.codeyogi.io/me`,
-       {withCredentials: true});
-      };
+export const getData = () => {
+  const assignmentsPromise = axios.get(CODEYOGI_BASE_URL + `batches/1/assignments`, {
+    withCredentials: true
+  });
 
+  const lecturesPromise = axios.get(CODEYOGI_BASE_URL + `batches/1/sessions`, {
+    withCredentials: true
+  });
 
+  const combinedPromise = Promise.all([assignmentsPromise, lecturesPromise]);
+  combinedPromise.then((assignmentsResponse, lecturesResponse) => {
+    console.log("assignment ka response aya hai", assignmentsResponse);
+    console.log("lectures ka response aya hai", lecturesResponse);
+  });
+};
 
+const putCachedData = (key, data) => {
+  localStorage.setItem(key, JSON.stringify(data));
+};
 
-    // just for example purpose how to call more than two apis and execute them simultaneouly.
+export const getCachedData = key => {
+  return JSON.parse(localStorage.getItem(key));
+};
 
-    export const getData = ()=>{
-      const assignmentsPromise= axios.get(CODEYOGI_BASE_URL + `batches/1/assignments`,{
-        withCredentials: true,})
-      
-
-        const lecturesPromise= axios.get(CODEYOGI_BASE_URL + `batches/1/sessions`,{
-          withCredentials:true,})
-          
-
-         const combinedPromise = Promise.all([assignmentsPromise, lecturesPromise])
-         combinedPromise.then((assignmentsResponse, lecturesResponse) =>{
-           console.log('assignment ka response aya hai', assignmentsResponse);
-           console.log('lectures ka response aya hai', lecturesResponse);
-         });
-        };
-
-
-
-    const putCachedData = (key, data)=>{
-      localStorage.setItem(key, JSON.stringify(data));
-    };
-
-
-    export const getCachedData= (key)=> {
-      return JSON.parse(localStorage.getItem(key));
-    }
-
-
-    const handleError = (e)=>{
-      if(e=== 'ERR_TIMED_OUT')
-    console.log('error in your program', e);
-    };
+const handleError = e => {
+  if (e === "ERR_TIMED_OUT") console.log("error in your program", e);
+};

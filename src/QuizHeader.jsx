@@ -6,12 +6,14 @@ import {Link} from "react-router-dom";
 
 
 function QuizHeader(props) {
+
+  const moreCSS= props.className
   return (
     <>
-      <div className="flex bg-gray-800 fixed w-screen justify-between">
+      <div className={"flex bg-gray-800 fixed w-screen justify-between " + moreCSS}>
         <div className="flex pl-3"> 
       <Branding> </Branding>
-        <p class="text-white text-lg bg-gray-800 p-4">  |  Welcome, Navin </p>
+        <p className="text-white text-lg bg-gray-800 p-4">  |  Welcome, Navin </p>
           </div>
 
 
